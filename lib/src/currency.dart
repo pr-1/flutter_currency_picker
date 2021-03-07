@@ -1,24 +1,24 @@
 class Currency {
   ///The currency code
-  final String code;
+  final String? code;
 
   ///The currency name in English
-  final String name;
+  final String? name;
 
   ///The currency symbol
-  final String symbol;
+  final String? symbol;
 
   ///The currency flag code
   ///
   /// To get flag unicode(Emoji ) use [CurrencyUtils.countryCodeToEmoji]
-  final String flag;
+  final String? flag;
 
   ///The currency number
-  final String number;
+  final String? number;
 
   Currency({this.code, this.name, this.symbol, this.flag, this.number});
 
-  Currency.from({Map<String, dynamic> json})
+  Currency.from({required Map<String, dynamic> json})
       : code = json['code'],
         name = json['name'],
         symbol = json['symbol'],

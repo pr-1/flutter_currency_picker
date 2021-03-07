@@ -1,8 +1,9 @@
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:currency_picker/src/currencies.dart';
 import 'package:currency_picker/src/currency.dart';
 
 class CurrencyService {
-  List<Currency> _currencies;
+  List<Currency>? _currencies;
 
   CurrencyService() {
     loadCurrencies();
@@ -14,26 +15,23 @@ class CurrencyService {
   }
 
   ///Return list with all currencies
-  List<Currency> getAll() {
+  List<Currency>? getAll() {
     return _currencies;
   }
 
   ///Returns the first currency that mach the given code.
-  Currency findByCode(String code) {
+  Currency? findByCode(String code) {
     final uppercaseCode = code.toUpperCase();
-    return _currencies.firstWhere((currency) => currency.code == uppercaseCode,
-        orElse: () => null);
+    return _currencies!.firstWhereOrNull((currency) => currency.code == uppercaseCode);
   }
 
   ///Returns the first currency that mach the given name.
-  Currency findByName(String name) {
-    return _currencies.firstWhere((currency) => currency.name == name,
-        orElse: () => null);
+  Currency? findByName(String name) {
+    return _currencies!.firstWhereOrNull((currency) => currency.name == name);
   }
 
   ///Returns the first currency that mach the given number.
-  Currency findByNumber(String number) {
-    return _currencies.firstWhere((currency) => currency.number == number,
-        orElse: () => null);
+  Currency? findByNumber(String number) {
+    return _currencies!.firstWhereOrNull((currency) => currency.number == number);
   }
 }

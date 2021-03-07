@@ -8,12 +8,12 @@ class CurrencyListView extends StatefulWidget {
   /// Called when a currency is select.
   ///
   /// The currency picker passes the new value to the callback.
-  final ValueChanged<Currency> onSelect;
+  final ValueChanged<Currency>? onSelect;
 
   /// Can be used to uses filter the Currency list (optional).
   ///
   /// It takes a list of Currency code.
-  final List<String> currencyFilter;
+  final List<String>? currencyFilter;
 
   /// Shows flag for each currency (optional).
   ///
@@ -35,10 +35,10 @@ class CurrencyListView extends StatefulWidget {
   /// Hint of the search TextField (optional).
   ///
   /// Defaults Search.
-  final String searchHint;
+  final String? searchHint;
 
   const CurrencyListView({
-    Key key,
+    Key? key,
     this.onSelect,
     this.currencyFilter,
     this.searchHint,
@@ -54,10 +54,10 @@ class CurrencyListView extends StatefulWidget {
 class _CurrencyListViewState extends State<CurrencyListView> {
   final CurrencyService _currencyService = CurrencyService();
 
-  List<Currency> _filteredList;
-  List<Currency> _currencyList;
+  late List<Currency> _filteredList;
+  List<Currency>? _currencyList;
 
-  TextEditingController _searchController;
+  TextEditingController? _searchController;
 
   @override
   void initState() {
@@ -69,19 +69,19 @@ class _CurrencyListViewState extends State<CurrencyListView> {
 
     if (widget.currencyFilter != null) {
       final List<String> currencyFilter =
-          widget.currencyFilter.map((code) => code.toUpperCase()).toList();
+          widget.currencyFilter!.map((code) => code.toUpperCase()).toList();
 
-      _currencyList
+      _currencyList!
           .removeWhere((element) => !currencyFilter.contains(element.code));
     }
 
-    _filteredList.addAll(_currencyList);
+    _filteredList.addAll(_currencyList!);
     super.initState();
   }
 
   @override
   void dispose() {
-    _searchController.dispose();
+    _searchController!.dispose();
     super.dispose();
   }
 
@@ -125,7 +125,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
       color: Colors.transparent,
       child: InkWell(
         onTap: () {
-          widget.onSelect(currency);
+          widget.onSelect!(currency);
           Navigator.pop(context);
         },
         child: Padding(
@@ -150,13 +150,13 @@ class _CurrencyListViewState extends State<CurrencyListView> {
                         children: [
                           if (widget.showCurrencyCode) ...[
                             Text(
-                              currency.code,
+                              currency.code!,
                               style: const TextStyle(fontSize: 17),
                             ),
                           ],
                           if (widget.showCurrencyName) ...[
                             Text(
-                              currency.name,
+                              currency.name!,
                               style: widget.showCurrencyCode
                                   ? TextStyle(
                                       fontSize: 15,
@@ -174,7 +174,7 @@ class _CurrencyListViewState extends State<CurrencyListView> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Text(
-                  currency.symbol,
+                  currency.symbol!,
                   style: const TextStyle(fontSize: 18),
                 ),
               ),
@@ -189,12 +189,12 @@ class _CurrencyListViewState extends State<CurrencyListView> {
     List<Currency> _searchResult = <Currency>[];
 
     if (query.isEmpty) {
-      _searchResult.addAll(_currencyList);
+      _searchResult.addAll(_currencyList!);
     } else {
-      _searchResult = _currencyList
+      _searchResult = _currencyList!
           .where((c) =>
-              c.name.toLowerCase().contains(query.toLowerCase()) ||
-              c.code.toLowerCase().contains(query.toLowerCase()))
+              c.name!.toLowerCase().contains(query.toLowerCase()) ||
+              c.code!.toLowerCase().contains(query.toLowerCase()))
           .toList();
     }
 
